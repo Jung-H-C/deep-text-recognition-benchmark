@@ -80,10 +80,24 @@ def train(opt):
     model.train()
     if opt.saved_model != '':
         print(f'loading pretrained model from {opt.saved_model}')
+        checkpoint = torch.load(opt.saved_model, map_location=device)
+
         if opt.FT:
-            model.load_state_dict(torch.load(opt.saved_model), strict=False)
+            model_state = model.state_dict()
+
+            compatible_weights = {
+                key: value
+                for key, value in checkpoint.items()
+                if key in model_state and value.shape == model_state[key].shape
+            }
+
+            skipped_weights = sorted(set(checkpoint) - set(compatible_weights))
+            print(f'Skipped incompatible/missing weights: {skipped_weights}')
+
+            model.load_state_dict(compatible_weights, strict=False)
         else:
-            model.load_state_dict(torch.load(opt.saved_model))
+            model.load_state_dict(checkpoint)
+            
     print("Model:")
     print(model)
 
