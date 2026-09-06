@@ -22,7 +22,7 @@ def main() -> None:
     output = root / "label_character_set_by_split.txt"
     character_sets = {
         split: characters_from(root / split / "gt.txt")
-        for split in ("training", "validation", "test")
+        for split in ("training", "validation")
     }
 
     with output.open("w", encoding="utf-8", newline="\n") as report:
@@ -36,6 +36,19 @@ def main() -> None:
             for character in sorted(characters):
                 report.write(f"{character}\n")
             report.write("\n")
+
+        training_only = character_sets["training"] - character_sets["validation"]
+        validation_only = character_sets["validation"] - character_sets["training"]
+        report.write("[comparison]\n")
+        report.write(f"sets_equal: {not training_only and not validation_only}\n")
+        report.write(f"training_only_count: {len(training_only)}\n")
+        report.write("training_only_characters:\n")
+        for character in sorted(training_only):
+            report.write(f"{character}\n")
+        report.write(f"validation_only_count: {len(validation_only)}\n")
+        report.write("validation_only_characters:\n")
+        for character in sorted(validation_only):
+            report.write(f"{character}\n")
 
     for split, characters in character_sets.items():
         print(f"{split}: {len(characters)} unique characters")
