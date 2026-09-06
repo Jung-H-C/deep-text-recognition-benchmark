@@ -4,6 +4,7 @@ import time
 import random
 import string
 import argparse
+import copy
 
 import torch
 import torch.backends.cudnn as cudnn
@@ -13,13 +14,310 @@ import torch.utils.data
 import numpy as np
 
 from utils import CTCLabelConverter, CTCLabelConverterForBaiduWarpctc, AttnLabelConverter, Averager
-from dataset import hierarchical_dataset, AlignCollate, Batch_Balanced_Dataset
+from dataset import hierarchical_dataset, AlignCollate, Batch_Balanced_Dataset, LmdbDataset
 from model import Model
 from test import validation
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 
+def _begin_resource_tracking(opt):
+    """Start tracking only for checkpoint fine-tuning or meta-learning runs."""
+    if not (opt.FT or opt.meta_learn):
+        return None
+
+    if torch.cuda.is_available():
+        torch.cuda.synchronize(device)
+        torch.cuda.reset_peak_memory_stats(device)
+    return time.perf_counter()
+
+
+def _resource_usage_log(opt, start_time, gpu_count):
+    """Return a final peak-memory and aggregate GPU-hours log entry."""
+    if start_time is None:
+        return None
+
+    if torch.cuda.is_available():
+        torch.cuda.synchronize(device)
+        elapsed_seconds = time.perf_counter() - start_time
+        peak_memory_gib = torch.cuda.max_memory_allocated(device) / (1024 ** 3)
+        gpu_hours = elapsed_seconds / 3600 * gpu_count
+        return (f'Resource usage | elapsed_hours: {elapsed_seconds / 3600:.4f} | '
+                f'gpu_count: {gpu_count} | gpu_hours: {gpu_hours:.4f} | '
+                f'peak_gpu_memory_gib: {peak_memory_gib:.3f}')
+
+    elapsed_seconds = time.perf_counter() - start_time
+    return (f'Resource usage | elapsed_hours: {elapsed_seconds / 3600:.4f} | '
+            'gpu_count: 0 | gpu_hours: 0.0000 | peak_gpu_memory_gib: N/A (CUDA unavailable)')
+
+
+def _load_checkpoint(model, opt):
+    """Load checkpoints saved with either a plain model or DataParallel."""
+    if not opt.saved_model:
+        raise ValueError('--saved_model is required when --meta_learn is set.')
+
+    print(f'loading pretrained model from {opt.saved_model}')
+    checkpoint = torch.load(opt.saved_model, map_location=device)
+    if isinstance(checkpoint, dict) and 'state_dict' in checkpoint:
+        checkpoint = checkpoint['state_dict']
+    checkpoint = {
+        key.removeprefix('module.'): value
+        for key, value in checkpoint.items()
+    }
+
+    if opt.FT:
+        model_state = model.state_dict()
+        compatible_weights = {
+            key: value for key, value in checkpoint.items()
+            if key in model_state and value.shape == model_state[key].shape
+        }
+        skipped_weights = sorted(set(checkpoint) - set(compatible_weights))
+        print(f'Skipped incompatible/missing weights: {skipped_weights}')
+        model.load_state_dict(compatible_weights, strict=False)
+    else:
+        model.load_state_dict(checkpoint, strict=True)
+
+
+def _meta_checkpoint_state_dict(model):
+    """Keep the `module.` key prefix expected by this repository's test.py."""
+    return {
+        f'module.{name}': value.detach().cpu()
+        for name, value in model.state_dict().items()
+    }
+
+
+def _load_writer_datasets(root, opt):
+    """Load each immediate LMDB directory as one writer/task."""
+    if not os.path.isdir(root):
+        raise ValueError(f'Missing meta-learning dataset root: {root}')
+
+    writer_dirs = [
+        os.path.join(root, name) for name in sorted(os.listdir(root))
+        if os.path.isdir(os.path.join(root, name))
+        and os.path.isfile(os.path.join(root, name, 'data.mdb'))
+    ]
+    if not writer_dirs:
+        raise ValueError(f'No writer LMDB datasets found under: {root}')
+
+    writer_datasets = []
+    for writer_dir in writer_dirs:
+        dataset = LmdbDataset(writer_dir, opt)
+        if len(dataset) == 0:
+            raise ValueError(f'No usable samples in writer dataset: {writer_dir}')
+        writer_datasets.append((os.path.basename(writer_dir), dataset))
+        print(f'meta writer {os.path.basename(writer_dir)}: {len(dataset)} samples')
+    return writer_datasets
+
+
+def _writer_batch(dataset, indices, collate):
+    """Read a sampled list of LMDB records and apply the project's preprocessing."""
+    return collate([dataset[index] for index in indices])
+
+
+def _ctc_loss(model, image_tensors, labels, converter, criterion, opt):
+    """Compute the repository's standard CTC objective for one sampled batch."""
+    image = image_tensors.to(device, non_blocking=True)
+    text, target_lengths = converter.encode(labels, batch_max_length=opt.batch_max_length)
+    preds = model(image, text)
+    input_lengths = torch.IntTensor([preds.size(1)] * image.size(0))
+    return criterion(preds.log_softmax(2).permute(1, 0, 2), text, input_lengths, target_lengths)
+
+
+def _adapt_task_model(meta_model, support_batch, converter, criterion, opt):
+    """Perform first-order inner-loop updates on an isolated writer clone."""
+    task_model = copy.deepcopy(meta_model)
+    task_model.train()
+    inner_optimizer = optim.SGD(task_model.parameters(), lr=opt.meta_inner_lr)
+
+    for _ in range(opt.meta_inner_steps):
+        inner_optimizer.zero_grad()
+        support_loss = _ctc_loss(task_model, *support_batch, converter, criterion, opt)
+        support_loss.backward()
+        torch.nn.utils.clip_grad_norm_(task_model.parameters(), opt.grad_clip)
+        inner_optimizer.step()
+    return task_model
+
+
+def _fixed_validation_supports(writer_datasets, support_size, seed):
+    """Sample one reproducible support set per meta-validation writer."""
+    rng = random.Random(seed)
+    supports = {}
+    for writer_name, dataset in writer_datasets:
+        if len(dataset) <= support_size:
+            raise ValueError(
+                f'{writer_name} has {len(dataset)} samples; validation needs '
+                f'{support_size} support samples plus at least one query sample.')
+        supports[writer_name] = rng.sample(range(len(dataset)), support_size)
+    return supports
+
+
+def _meta_validation_loss(meta_model, writer_datasets, fixed_supports, collate, converter, criterion, opt):
+    """Adapt once per validation writer, then average loss over every remaining record."""
+    total_loss = 0.0
+    total_query_samples = 0
+
+    for writer_name, dataset in writer_datasets:
+        support_indices = fixed_supports[writer_name]
+        support_batch = _writer_batch(dataset, support_indices, collate)
+        task_model = _adapt_task_model(meta_model, support_batch, converter, criterion, opt)
+        task_model.eval()
+
+        support_index_set = set(support_indices)
+        query_indices = [index for index in range(len(dataset)) if index not in support_index_set]
+        for start in range(0, len(query_indices), opt.meta_query_size):
+            batch_indices = query_indices[start:start + opt.meta_query_size]
+            query_batch = _writer_batch(dataset, batch_indices, collate)
+            with torch.no_grad():
+                query_loss = _ctc_loss(task_model, *query_batch, converter, criterion, opt)
+            batch_size = len(batch_indices)
+            total_loss += query_loss.item() * batch_size
+            total_query_samples += batch_size
+
+        del task_model
+
+    return total_loss / total_query_samples
+
+
+def meta_train(opt):
+    """FOMAML training using fixed writer-level LMDB tasks in step_maml/."""
+    if opt.Prediction != 'CTC':
+        raise ValueError('--meta_learn currently supports only --Prediction CTC.')
+    if opt.baiduCTC:
+        raise ValueError('--meta_learn does not support --baiduCTC; use PyTorch CTCLoss.')
+    if opt.meta_way < 1 or opt.meta_support_size < 1 or opt.meta_query_size < 1:
+        raise ValueError('meta way, support size, and query size must all be positive.')
+    if opt.meta_inner_steps < 1 or opt.meta_epochs < 1 or opt.meta_tasks_per_epoch < 1:
+        raise ValueError('meta inner steps, epochs, and tasks per epoch must all be positive.')
+    if opt.meta_patience < 1 or opt.meta_log_interval < 1:
+        raise ValueError('meta patience and log interval must both be positive.')
+    if opt.meta_inner_lr <= 0 or opt.meta_outer_lr <= 0:
+        raise ValueError('meta inner and outer learning rates must both be positive.')
+
+    meta_train_root = './step_maml/training'
+    meta_validation_root = './step_maml/validation'
+    train_writers = _load_writer_datasets(meta_train_root, opt)
+    validation_writers = _load_writer_datasets(meta_validation_root, opt)
+    if len(train_writers) != 80 or len(validation_writers) != 20:
+        raise ValueError(
+            'Expected exactly 80 training writers and 20 validation writers under step_maml/.')
+    if opt.meta_way > len(train_writers):
+        raise ValueError(f'--meta_way ({opt.meta_way}) exceeds available training writers ({len(train_writers)}).')
+
+    required_train_samples = opt.meta_support_size + opt.meta_query_size
+    too_small = [name for name, dataset in train_writers if len(dataset) < required_train_samples]
+    if too_small:
+        raise ValueError(f'Writers without {required_train_samples} samples: {", ".join(too_small)}')
+
+    converter = CTCLabelConverter(opt.character)
+    opt.num_class = len(converter.character)
+    meta_model = Model(opt).to(device)
+    _load_checkpoint(meta_model, opt)
+    criterion = torch.nn.CTCLoss(zero_infinity=True).to(device)
+    outer_optimizer = optim.Adam(meta_model.parameters(), lr=opt.meta_outer_lr)
+    collate = AlignCollate(imgH=opt.imgH, imgW=opt.imgW, keep_ratio_with_pad=opt.PAD)
+    fixed_supports = _fixed_validation_supports(validation_writers, support_size=16,
+                                                seed=opt.manualSeed + 10_000)
+
+    save_dir = f'./saved_models/{opt.exp_name}'
+    log_path = os.path.join(save_dir, 'log_meta_train.txt')
+    best_validation_loss = float('inf')
+    epochs_without_improvement = 0
+    task_rng = random.Random(opt.manualSeed)
+    resource_start_time = _begin_resource_tracking(opt)
+
+    with open(os.path.join(save_dir, 'opt.txt'), 'a') as opt_file:
+        opt_file.write('------------ Meta-learning Options -------------\n')
+        for key, value in vars(opt).items():
+            opt_file.write(f'{key}: {value}\n')
+        opt_file.write('meta_validation_support_size: 16\n')
+        opt_file.write('--------------------------------------------------\n')
+
+    print('Starting FOMAML: '
+          f'{opt.meta_epochs} epochs, {opt.meta_tasks_per_epoch} tasks/epoch, '
+          f'{opt.meta_way}-way, {opt.meta_support_size}-support, {opt.meta_query_size}-query.')
+    for epoch in range(1, opt.meta_epochs + 1):
+        meta_model.train()
+        epoch_meta_loss = 0.0
+
+        for task_index in range(1, opt.meta_tasks_per_epoch + 1):
+            selected_writers = task_rng.sample(train_writers, opt.meta_way)
+            accumulated_grads = {
+                name: torch.zeros_like(parameter)
+                for name, parameter in meta_model.named_parameters()
+                if parameter.requires_grad
+            }
+            task_query_loss = 0.0
+
+            for _, dataset in selected_writers:
+                sampled_indices = task_rng.sample(
+                    range(len(dataset)), required_train_samples)
+                support_indices = sampled_indices[:opt.meta_support_size]
+                query_indices = sampled_indices[opt.meta_support_size:]
+
+                support_batch = _writer_batch(dataset, support_indices, collate)
+                query_batch = _writer_batch(dataset, query_indices, collate)
+                task_model = _adapt_task_model(meta_model, support_batch, converter, criterion, opt)
+                task_model.train()
+                # The inner-loop backward pass leaves support gradients on this clone.
+                # FOMAML must transfer only the query gradients to the meta-model.
+                task_model.zero_grad(set_to_none=True)
+                query_loss = _ctc_loss(task_model, *query_batch, converter, criterion, opt)
+                query_loss.backward()
+                task_query_loss += query_loss.item()
+
+                for name, parameter in task_model.named_parameters():
+                    if name in accumulated_grads and parameter.grad is not None:
+                        accumulated_grads[name].add_(parameter.grad.detach())
+                del task_model
+
+            outer_optimizer.zero_grad()
+            for name, parameter in meta_model.named_parameters():
+                if parameter.requires_grad:
+                    parameter.grad = accumulated_grads[name] / opt.meta_way
+            torch.nn.utils.clip_grad_norm_(meta_model.parameters(), opt.grad_clip)
+            outer_optimizer.step()
+
+            mean_task_loss = task_query_loss / opt.meta_way
+            epoch_meta_loss += mean_task_loss
+            if task_index % opt.meta_log_interval == 0 or task_index == opt.meta_tasks_per_epoch:
+                print(f'Epoch {epoch}/{opt.meta_epochs} task {task_index}/{opt.meta_tasks_per_epoch} '
+                      f'meta-train-loss: {mean_task_loss:.5f}')
+
+        epoch_meta_loss /= opt.meta_tasks_per_epoch
+        meta_validation_loss = _meta_validation_loss(
+            meta_model, validation_writers, fixed_supports, collate, converter, criterion, opt)
+
+        log_line = (f'Epoch {epoch}/{opt.meta_epochs} | '
+                    f'meta-train-loss: {epoch_meta_loss:.5f} | '
+                    f'meta-val-loss: {meta_validation_loss:.5f}')
+        if meta_validation_loss < best_validation_loss:
+            best_validation_loss = meta_validation_loss
+            epochs_without_improvement = 0
+            torch.save(_meta_checkpoint_state_dict(meta_model), os.path.join(save_dir, 'best_model.pth'))
+            log_line += ' | saved best_model.pth'
+        else:
+            epochs_without_improvement += 1
+            log_line += f' | no improvement: {epochs_without_improvement}/{opt.meta_patience}'
+
+        print(log_line)
+        with open(log_path, 'a') as log_file:
+            log_file.write(log_line + '\n')
+
+        if epochs_without_improvement >= opt.meta_patience:
+            print(f'Early stopping after epoch {epoch}; best meta-val-loss: {best_validation_loss:.5f}')
+            break
+
+    resource_log = _resource_usage_log(opt, resource_start_time, gpu_count=1)
+    print(resource_log)
+    with open(log_path, 'a') as log_file:
+        log_file.write(resource_log + '\n')
+    print(f'FOMAML complete. Best checkpoint: {os.path.join(save_dir, "best_model.pth")}')
+
+
 def train(opt):
+    if opt.meta_learn:
+        meta_train(opt)
+        return
+
     """ dataset preparation """
     if not opt.data_filtering_off:
         print('Filtering the images containing characters which are not in opt.character')
@@ -152,6 +450,7 @@ def train(opt):
             pass
 
     start_time = time.time()
+    resource_start_time = _begin_resource_tracking(opt)
     best_accuracy = -1
     best_norm_ED = -1
     iteration = start_iter
@@ -229,27 +528,32 @@ def train(opt):
                 print(predicted_result_log)
                 log.write(predicted_result_log + '\n')
 
-        # save model per 1e+5 iter.
-        if (iteration + 1) % 1e+5 == 0:
+            # Save a checkpoint after every validation.
             torch.save(
                 model.state_dict(), f'./saved_models/{opt.exp_name}/iter_{iteration+1}.pth')
 
         if (iteration + 1) == opt.num_iter:
+            resource_log = _resource_usage_log(
+                opt, resource_start_time, gpu_count=max(opt.num_gpu, 1))
+            if resource_log:
+                print(resource_log)
+                with open(f'./saved_models/{opt.exp_name}/log_train.txt', 'a') as log:
+                    log.write(resource_log + '\n')
             print('end the training')
-            sys.exit()
+            return
         iteration += 1
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--exp_name', help='Where to store logs and models')
-    parser.add_argument('--train_data', required=True, help='path to training dataset')
-    parser.add_argument('--valid_data', required=True, help='path to validation dataset')
+    parser.add_argument('--train_data', default='', help='path to training dataset')
+    parser.add_argument('--valid_data', default='', help='path to validation dataset')
     parser.add_argument('--manualSeed', type=int, default=1111, help='for random seed setting')
     parser.add_argument('--workers', type=int, help='number of data loading workers', default=4)
-    parser.add_argument('--batch_size', type=int, default=32, help='input batch size')
+    parser.add_argument('--batch_size', type=int, default=192, help='input batch size')
     parser.add_argument('--num_iter', type=int, default=300000, help='number of iterations to train for')
-    parser.add_argument('--valInterval', type=int, default=12400, help='Interval between each validation')
+    parser.add_argument('--valInterval', type=int, default=2000, help='Interval between each validation')
     parser.add_argument('--saved_model', default='', help="path to model to continue training")
     parser.add_argument('--FT', action='store_true', help='whether to do fine-tuning')
     parser.add_argument('--adam', action='store_true', help='Whether to use adam (default is Adadelta)')
@@ -259,6 +563,29 @@ if __name__ == '__main__':
     parser.add_argument('--eps', type=float, default=1e-8, help='eps for Adadelta. default=1e-8')
     parser.add_argument('--grad_clip', type=float, default=5, help='gradient clipping value. default=5')
     parser.add_argument('--baiduCTC', action='store_true', help='for data_filtering_off mode')
+    """Meta-learning (FOMAML)"""
+    parser.add_argument('--meta_learn', action='store_true',
+                        help='run FOMAML on fixed writer tasks in ./step_maml/')
+    parser.add_argument('--meta_way', type=int, default=8,
+                        help='number of writer tasks sampled per meta-task')
+    parser.add_argument('--meta_support_size', type=int, default=16,
+                        help='number of support samples sampled per training writer')
+    parser.add_argument('--meta_query_size', type=int, default=16,
+                        help='number of query samples sampled per training writer and query batch size in validation')
+    parser.add_argument('--meta_inner_steps', type=int, default=1,
+                        help='number of gradient updates in each inner loop')
+    parser.add_argument('--meta_inner_lr', type=float, default=0.01,
+                        help='FOMAML inner-loop learning rate (alpha)')
+    parser.add_argument('--meta_outer_lr', type=float, default=0.0001,
+                        help='FOMAML Adam outer-loop learning rate (beta)')
+    parser.add_argument('--meta_tasks_per_epoch', type=int, default=100,
+                        help='number of randomly sampled meta-tasks per epoch')
+    parser.add_argument('--meta_epochs', type=int, default=40,
+                        help='maximum number of FOMAML epochs')
+    parser.add_argument('--meta_patience', type=int, default=5,
+                        help='early-stopping patience measured in meta-validation epochs')
+    parser.add_argument('--meta_log_interval', type=int, default=10,
+                        help='print every N meta-training tasks')
     """ Data processing """
     parser.add_argument('--select_data', type=str, default='MJ-ST',
                         help='select training data (default is MJ-ST, which means MJ and ST used as training data)')
@@ -289,6 +616,9 @@ if __name__ == '__main__':
     parser.add_argument('--hidden_size', type=int, default=256, help='the size of the LSTM hidden state')
 
     opt = parser.parse_args()
+
+    if not opt.meta_learn and (not opt.train_data or not opt.valid_data):
+        parser.error('--train_data and --valid_data are required unless --meta_learn is set.')
 
     if not opt.exp_name:
         opt.exp_name = f'{opt.Transformation}-{opt.FeatureExtraction}-{opt.SequenceModeling}-{opt.Prediction}'

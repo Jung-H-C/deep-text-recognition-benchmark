@@ -1,0 +1,1154 @@
+Output already exists: /data/OCR/deep-text-recognition-benchmark/step_finetuning/training
+training: 393601 samples
+validation: 98401 samples
+Written 1000 / 393601
+Written 2000 / 393601
+Written 3000 / 393601
+Written 4000 / 393601
+Written 5000 / 393601
+Written 6000 / 393601
+Written 7000 / 393601
+Written 8000 / 393601
+Written 9000 / 393601
+Written 10000 / 393601
+Written 11000 / 393601
+Written 12000 / 393601
+Written 13000 / 393601
+Written 14000 / 393601
+Written 15000 / 393601
+Written 16000 / 393601
+Written 17000 / 393601
+Written 18000 / 393601
+Written 19000 / 393601
+Written 20000 / 393601
+Written 21000 / 393601
+Written 22000 / 393601
+Written 23000 / 393601
+Written 24000 / 393601
+Written 25000 / 393601
+Written 26000 / 393601
+Written 27000 / 393601
+Written 28000 / 393601
+Written 29000 / 393601
+Written 30000 / 393601
+Written 31000 / 393601
+Written 32000 / 393601
+Written 33000 / 393601
+Written 34000 / 393601
+Written 35000 / 393601
+Written 36000 / 393601
+Written 37000 / 393601
+Written 38000 / 393601
+Written 39000 / 393601
+Written 40000 / 393601
+Written 41000 / 393601
+Written 42000 / 393601
+Written 43000 / 393601
+Written 44000 / 393601
+Written 45000 / 393601
+Written 46000 / 393601
+Written 47000 / 393601
+Written 48000 / 393601
+Written 49000 / 393601
+Written 50000 / 393601
+Written 51000 / 393601
+Written 52000 / 393601
+Written 53000 / 393601
+Written 54000 / 393601
+Written 55000 / 393601
+Written 56000 / 393601
+Written 57000 / 393601
+Written 58000 / 393601
+Written 59000 / 393601
+Written 60000 / 393601
+Written 61000 / 393601
+Written 62000 / 393601
+Written 63000 / 393601
+Written 64000 / 393601
+Written 65000 / 393601
+Written 66000 / 393601
+Written 67000 / 393601
+Written 68000 / 393601
+Written 69000 / 393601
+Written 70000 / 393601
+Written 71000 / 393601
+Written 72000 / 393601
+Written 73000 / 393601
+Written 74000 / 393601
+Written 75000 / 393601
+Written 76000 / 393601
+Written 77000 / 393601
+Written 78000 / 393601
+Written 79000 / 393601
+Written 80000 / 393601
+Written 81000 / 393601
+Written 82000 / 393601
+Written 83000 / 393601
+Written 84000 / 393601
+Written 85000 / 393601
+Written 86000 / 393601
+Written 87000 / 393601
+Written 88000 / 393601
+Written 89000 / 393601
+Written 90000 / 393601
+Written 91000 / 393601
+Written 92000 / 393601
+Written 93000 / 393601
+Written 94000 / 393601
+Written 95000 / 393601
+Written 96000 / 393601
+Written 97000 / 393601
+Written 98000 / 393601
+Written 99000 / 393601
+Written 100000 / 393601
+Written 101000 / 393601
+Written 102000 / 393601
+Written 103000 / 393601
+Written 104000 / 393601
+Written 105000 / 393601
+Written 106000 / 393601
+Written 107000 / 393601
+Written 108000 / 393601
+Written 109000 / 393601
+Written 110000 / 393601
+Written 111000 / 393601
+Written 112000 / 393601
+Written 113000 / 393601
+Written 114000 / 393601
+Written 115000 / 393601
+Written 116000 / 393601
+Written 117000 / 393601
+Written 118000 / 393601
+Written 119000 / 393601
+Written 120000 / 393601
+Written 121000 / 393601
+Written 122000 / 393601
+Written 123000 / 393601
+Written 124000 / 393601
+Written 125000 / 393601
+Written 126000 / 393601
+Written 127000 / 393601
+Written 128000 / 393601
+Written 129000 / 393601
+Written 130000 / 393601
+Written 131000 / 393601
+Written 132000 / 393601
+Written 133000 / 393601
+Written 134000 / 393601
+Written 135000 / 393601
+Written 136000 / 393601
+Written 137000 / 393601
+Written 138000 / 393601
+Written 139000 / 393601
+Written 140000 / 393601
+Written 141000 / 393601
+Written 142000 / 393601
+Written 143000 / 393601
+Written 144000 / 393601
+Written 145000 / 393601
+Written 146000 / 393601
+Written 147000 / 393601
+Written 148000 / 393601
+Written 149000 / 393601
+Written 150000 / 393601
+Written 151000 / 393601
+Written 152000 / 393601
+Written 153000 / 393601
+Written 154000 / 393601
+Written 155000 / 393601
+Written 156000 / 393601
+Written 157000 / 393601
+Written 158000 / 393601
+Written 159000 / 393601
+Written 160000 / 393601
+Written 161000 / 393601
+Written 162000 / 393601
+Written 163000 / 393601
+Written 164000 / 393601
+Written 165000 / 393601
+Written 166000 / 393601
+Written 167000 / 393601
+Written 168000 / 393601
+Written 169000 / 393601
+Written 170000 / 393601
+Written 171000 / 393601
+Written 172000 / 393601
+Written 173000 / 393601
+Written 174000 / 393601
+Written 175000 / 393601
+Written 176000 / 393601
+Written 177000 / 393601
+Written 178000 / 393601
+Written 179000 / 393601
+Written 180000 / 393601
+Written 181000 / 393601
+Written 182000 / 393601
+Written 183000 / 393601
+Written 184000 / 393601
+Written 185000 / 393601
+Written 186000 / 393601
+Written 187000 / 393601
+Written 188000 / 393601
+Written 189000 / 393601
+Written 190000 / 393601
+Written 191000 / 393601
+Written 192000 / 393601
+Written 193000 / 393601
+Written 194000 / 393601
+Written 195000 / 393601
+Written 196000 / 393601
+Written 197000 / 393601
+Written 198000 / 393601
+Written 199000 / 393601
+Written 200000 / 393601
+Written 201000 / 393601
+Written 202000 / 393601
+Written 203000 / 393601
+Written 204000 / 393601
+Written 205000 / 393601
+Written 206000 / 393601
+Written 207000 / 393601
+Written 208000 / 393601
+Written 209000 / 393601
+Written 210000 / 393601
+Written 211000 / 393601
+Written 212000 / 393601
+Written 213000 / 393601
+Written 214000 / 393601
+Written 215000 / 393601
+Written 216000 / 393601
+Written 217000 / 393601
+Written 218000 / 393601
+Written 219000 / 393601
+Written 220000 / 393601
+Written 221000 / 393601
+Written 222000 / 393601
+Written 223000 / 393601
+Written 224000 / 393601
+Written 225000 / 393601
+Written 226000 / 393601
+Written 227000 / 393601
+Written 228000 / 393601
+Written 229000 / 393601
+Written 230000 / 393601
+Written 231000 / 393601
+Written 232000 / 393601
+Written 233000 / 393601
+Written 234000 / 393601
+Written 235000 / 393601
+Written 236000 / 393601
+Written 237000 / 393601
+Written 238000 / 393601
+Written 239000 / 393601
+Written 240000 / 393601
+Written 241000 / 393601
+Written 242000 / 393601
+Written 243000 / 393601
+Written 244000 / 393601
+Written 245000 / 393601
+Written 246000 / 393601
+Written 247000 / 393601
+Written 248000 / 393601
+Written 249000 / 393601
+Written 250000 / 393601
+Written 251000 / 393601
+Written 252000 / 393601
+Written 253000 / 393601
+Written 254000 / 393601
+Written 255000 / 393601
+Written 256000 / 393601
+Written 257000 / 393601
+Written 258000 / 393601
+Written 259000 / 393601
+Written 260000 / 393601
+Written 261000 / 393601
+Written 262000 / 393601
+Written 263000 / 393601
+Written 264000 / 393601
+Written 265000 / 393601
+Written 266000 / 393601
+Written 267000 / 393601
+Written 268000 / 393601
+Written 269000 / 393601
+Written 270000 / 393601
+Written 271000 / 393601
+Written 272000 / 393601
+Written 273000 / 393601
+Written 274000 / 393601
+Written 275000 / 393601
+Written 276000 / 393601
+Written 277000 / 393601
+Written 278000 / 393601
+Written 279000 / 393601
+Written 280000 / 393601
+Written 281000 / 393601
+Written 282000 / 393601
+Written 283000 / 393601
+Written 284000 / 393601
+Written 285000 / 393601
+Written 286000 / 393601
+Written 287000 / 393601
+Written 288000 / 393601
+Written 289000 / 393601
+Written 290000 / 393601
+Written 291000 / 393601
+Written 292000 / 393601
+Written 293000 / 393601
+Written 294000 / 393601
+Written 295000 / 393601
+Written 296000 / 393601
+Written 297000 / 393601
+Written 298000 / 393601
+Written 299000 / 393601
+Written 300000 / 393601
+Written 301000 / 393601
+Written 302000 / 393601
+Written 303000 / 393601
+Written 304000 / 393601
+Written 305000 / 393601
+Written 306000 / 393601
+Written 307000 / 393601
+Written 308000 / 393601
+Written 309000 / 393601
+Written 310000 / 393601
+Written 311000 / 393601
+Written 312000 / 393601
+Written 313000 / 393601
+Written 314000 / 393601
+Written 315000 / 393601
+Written 316000 / 393601
+Written 317000 / 393601
+Written 318000 / 393601
+Written 319000 / 393601
+Written 320000 / 393601
+Written 321000 / 393601
+Written 322000 / 393601
+Written 323000 / 393601
+Written 324000 / 393601
+Written 325000 / 393601
+Written 326000 / 393601
+Written 327000 / 393601
+Written 328000 / 393601
+Written 329000 / 393601
+Written 330000 / 393601
+Written 331000 / 393601
+Written 332000 / 393601
+Written 333000 / 393601
+Written 334000 / 393601
+Written 335000 / 393601
+Written 336000 / 393601
+Written 337000 / 393601
+Written 338000 / 393601
+Written 339000 / 393601
+Written 340000 / 393601
+Written 341000 / 393601
+Written 342000 / 393601
+Written 343000 / 393601
+Written 344000 / 393601
+Written 345000 / 393601
+Written 346000 / 393601
+Written 347000 / 393601
+Written 348000 / 393601
+Written 349000 / 393601
+Written 350000 / 393601
+Written 351000 / 393601
+Written 352000 / 393601
+Written 353000 / 393601
+Written 354000 / 393601
+Written 355000 / 393601
+Written 356000 / 393601
+Written 357000 / 393601
+Written 358000 / 393601
+Written 359000 / 393601
+Written 360000 / 393601
+Written 361000 / 393601
+Written 362000 / 393601
+Written 363000 / 393601
+Written 364000 / 393601
+Written 365000 / 393601
+Written 366000 / 393601
+Written 367000 / 393601
+Written 368000 / 393601
+Written 369000 / 393601
+Written 370000 / 393601
+Written 371000 / 393601
+Written 372000 / 393601
+Written 373000 / 393601
+Written 374000 / 393601
+Written 375000 / 393601
+Written 376000 / 393601
+Written 377000 / 393601
+Written 378000 / 393601
+Written 379000 / 393601
+Written 380000 / 393601
+Written 381000 / 393601
+Written 382000 / 393601
+Written 383000 / 393601
+Written 384000 / 393601
+Written 385000 / 393601
+Written 386000 / 393601
+Written 387000 / 393601
+Written 388000 / 393601
+Written 389000 / 393601
+Written 390000 / 393601
+Written 391000 / 393601
+Written 392000 / 393601
+Written 393000 / 393601
+Created dataset with 393601 samples
+Written 1000 / 98401
+Written 2000 / 98401
+Written 3000 / 98401
+Written 4000 / 98401
+Written 5000 / 98401
+Written 6000 / 98401
+Written 7000 / 98401
+Written 8000 / 98401
+Written 9000 / 98401
+Written 10000 / 98401
+Written 11000 / 98401
+Written 12000 / 98401
+Written 13000 / 98401
+Written 14000 / 98401
+Written 15000 / 98401
+Written 16000 / 98401
+Written 17000 / 98401
+Written 18000 / 98401
+Written 19000 / 98401
+Written 20000 / 98401
+Written 21000 / 98401
+Written 22000 / 98401
+Written 23000 / 98401
+Written 24000 / 98401
+Written 25000 / 98401
+Written 26000 / 98401
+Written 27000 / 98401
+Written 28000 / 98401
+Written 29000 / 98401
+Written 30000 / 98401
+Written 31000 / 98401
+Written 32000 / 98401
+Written 33000 / 98401
+Written 34000 / 98401
+Written 35000 / 98401
+Written 36000 / 98401
+Written 37000 / 98401
+Written 38000 / 98401
+Written 39000 / 98401
+Written 40000 / 98401
+Written 41000 / 98401
+Written 42000 / 98401
+Written 43000 / 98401
+Written 44000 / 98401
+Written 45000 / 98401
+Written 46000 / 98401
+Written 47000 / 98401
+Written 48000 / 98401
+Written 49000 / 98401
+Written 50000 / 98401
+Written 51000 / 98401
+Written 52000 / 98401
+Written 53000 / 98401
+Written 54000 / 98401
+Written 55000 / 98401
+Written 56000 / 98401
+Written 57000 / 98401
+Written 58000 / 98401
+Written 59000 / 98401
+Written 60000 / 98401
+Written 61000 / 98401
+Written 62000 / 98401
+Written 63000 / 98401
+Written 64000 / 98401
+Written 65000 / 98401
+Written 66000 / 98401
+Written 67000 / 98401
+Written 68000 / 98401
+Written 69000 / 98401
+Written 70000 / 98401
+Written 71000 / 98401
+Written 72000 / 98401
+Written 73000 / 98401
+Written 74000 / 98401
+Written 75000 / 98401
+Written 76000 / 98401
+Written 77000 / 98401
+Written 78000 / 98401
+Written 79000 / 98401
+Written 80000 / 98401
+Written 81000 / 98401
+Written 82000 / 98401
+Written 83000 / 98401
+Written 84000 / 98401
+Written 85000 / 98401
+Written 86000 / 98401
+Written 87000 / 98401
+Written 88000 / 98401
+Written 89000 / 98401
+Written 90000 / 98401
+Written 91000 / 98401
+Written 92000 / 98401
+Written 93000 / 98401
+Written 94000 / 98401
+Written 95000 / 98401
+Written 96000 / 98401
+Written 97000 / 98401
+Written 98000 / 98401
+Created dataset with 98401 samples
+LMDB datasets created under: /data/OCR/deep-text-recognition-benchmark/step_finetuning
+Validated 100 writer manifests; held-out labels are excluded.
+Creating training task for writer 001
+Written 1000 / 5126
+Written 2000 / 5126
+Written 3000 / 5126
+Written 4000 / 5126
+Written 5000 / 5126
+Created dataset with 5126 samples
+Creating training task for writer 002
+Written 1000 / 5148
+Written 2000 / 5148
+Written 3000 / 5148
+Written 4000 / 5148
+Written 5000 / 5148
+Created dataset with 5148 samples
+Creating training task for writer 003
+Written 1000 / 5162
+Written 2000 / 5162
+Written 3000 / 5162
+Written 4000 / 5162
+Written 5000 / 5162
+Created dataset with 5162 samples
+Creating training task for writer 004
+Written 1000 / 4726
+Written 2000 / 4726
+Written 3000 / 4726
+Written 4000 / 4726
+Created dataset with 4726 samples
+Creating training task for writer 005
+Written 1000 / 5020
+Written 2000 / 5020
+Written 3000 / 5020
+Written 4000 / 5020
+Written 5000 / 5020
+Created dataset with 5020 samples
+Creating training task for writer 006
+Written 1000 / 5107
+Written 2000 / 5107
+Written 3000 / 5107
+Written 4000 / 5107
+Written 5000 / 5107
+Created dataset with 5107 samples
+Creating training task for writer 007
+Written 1000 / 4981
+Written 2000 / 4981
+Written 3000 / 4981
+Written 4000 / 4981
+Created dataset with 4981 samples
+Creating training task for writer 008
+Written 1000 / 5168
+Written 2000 / 5168
+Written 3000 / 5168
+Written 4000 / 5168
+Written 5000 / 5168
+Created dataset with 5168 samples
+Creating training task for writer 009
+Written 1000 / 4648
+Written 2000 / 4648
+Written 3000 / 4648
+Written 4000 / 4648
+Created dataset with 4648 samples
+Creating training task for writer 010
+Written 1000 / 5103
+Written 2000 / 5103
+Written 3000 / 5103
+Written 4000 / 5103
+Written 5000 / 5103
+Created dataset with 5103 samples
+Creating training task for writer 011
+Written 1000 / 4124
+Written 2000 / 4124
+Written 3000 / 4124
+Written 4000 / 4124
+Created dataset with 4124 samples
+Creating training task for writer 012
+Written 1000 / 4772
+Written 2000 / 4772
+Written 3000 / 4772
+Written 4000 / 4772
+Created dataset with 4772 samples
+Creating training task for writer 013
+Written 1000 / 4899
+Written 2000 / 4899
+Written 3000 / 4899
+Written 4000 / 4899
+Created dataset with 4899 samples
+Creating training task for writer 014
+Written 1000 / 5083
+Written 2000 / 5083
+Written 3000 / 5083
+Written 4000 / 5083
+Written 5000 / 5083
+Created dataset with 5083 samples
+Creating training task for writer 015
+Written 1000 / 4968
+Written 2000 / 4968
+Written 3000 / 4968
+Written 4000 / 4968
+Created dataset with 4968 samples
+Creating training task for writer 016
+Written 1000 / 5021
+Written 2000 / 5021
+Written 3000 / 5021
+Written 4000 / 5021
+Written 5000 / 5021
+Created dataset with 5021 samples
+Creating training task for writer 017
+Written 1000 / 5055
+Written 2000 / 5055
+Written 3000 / 5055
+Written 4000 / 5055
+Written 5000 / 5055
+Created dataset with 5055 samples
+Creating training task for writer 018
+Written 1000 / 5143
+Written 2000 / 5143
+Written 3000 / 5143
+Written 4000 / 5143
+Written 5000 / 5143
+Created dataset with 5143 samples
+Creating training task for writer 019
+Written 1000 / 5050
+Written 2000 / 5050
+Written 3000 / 5050
+Written 4000 / 5050
+Written 5000 / 5050
+Created dataset with 5050 samples
+Creating training task for writer 020
+Written 1000 / 5066
+Written 2000 / 5066
+Written 3000 / 5066
+Written 4000 / 5066
+Written 5000 / 5066
+Created dataset with 5066 samples
+Creating training task for writer 021
+Written 1000 / 5042
+Written 2000 / 5042
+Written 3000 / 5042
+Written 4000 / 5042
+Written 5000 / 5042
+Created dataset with 5042 samples
+Creating training task for writer 022
+Written 1000 / 5009
+Written 2000 / 5009
+Written 3000 / 5009
+Written 4000 / 5009
+Written 5000 / 5009
+Created dataset with 5009 samples
+Creating training task for writer 023
+Written 1000 / 4931
+Written 2000 / 4931
+Written 3000 / 4931
+Written 4000 / 4931
+Created dataset with 4931 samples
+Creating training task for writer 024
+Written 1000 / 5000
+Written 2000 / 5000
+Written 3000 / 5000
+Written 4000 / 5000
+Written 5000 / 5000
+Created dataset with 5000 samples
+Creating training task for writer 025
+Written 1000 / 5084
+Written 2000 / 5084
+Written 3000 / 5084
+Written 4000 / 5084
+Written 5000 / 5084
+Created dataset with 5084 samples
+Creating training task for writer 026
+Written 1000 / 5129
+Written 2000 / 5129
+Written 3000 / 5129
+Written 4000 / 5129
+Written 5000 / 5129
+Created dataset with 5129 samples
+Creating training task for writer 027
+Written 1000 / 4893
+Written 2000 / 4893
+Written 3000 / 4893
+Written 4000 / 4893
+Created dataset with 4893 samples
+Creating training task for writer 028
+Written 1000 / 4819
+Written 2000 / 4819
+Written 3000 / 4819
+Written 4000 / 4819
+Created dataset with 4819 samples
+Creating training task for writer 029
+Written 1000 / 4843
+Written 2000 / 4843
+Written 3000 / 4843
+Written 4000 / 4843
+Created dataset with 4843 samples
+Creating training task for writer 030
+Written 1000 / 5046
+Written 2000 / 5046
+Written 3000 / 5046
+Written 4000 / 5046
+Written 5000 / 5046
+Created dataset with 5046 samples
+Creating training task for writer 031
+Written 1000 / 4899
+Written 2000 / 4899
+Written 3000 / 4899
+Written 4000 / 4899
+Created dataset with 4899 samples
+Creating training task for writer 032
+Written 1000 / 5084
+Written 2000 / 5084
+Written 3000 / 5084
+Written 4000 / 5084
+Written 5000 / 5084
+Created dataset with 5084 samples
+Creating training task for writer 033
+Written 1000 / 5052
+Written 2000 / 5052
+Written 3000 / 5052
+Written 4000 / 5052
+Written 5000 / 5052
+Created dataset with 5052 samples
+Creating training task for writer 034
+Written 1000 / 5094
+Written 2000 / 5094
+Written 3000 / 5094
+Written 4000 / 5094
+Written 5000 / 5094
+Created dataset with 5094 samples
+Creating training task for writer 035
+Written 1000 / 5131
+Written 2000 / 5131
+Written 3000 / 5131
+Written 4000 / 5131
+Written 5000 / 5131
+Created dataset with 5131 samples
+Creating training task for writer 036
+Written 1000 / 5008
+Written 2000 / 5008
+Written 3000 / 5008
+Written 4000 / 5008
+Written 5000 / 5008
+Created dataset with 5008 samples
+Creating training task for writer 037
+Written 1000 / 4946
+Written 2000 / 4946
+Written 3000 / 4946
+Written 4000 / 4946
+Created dataset with 4946 samples
+Creating training task for writer 038
+Written 1000 / 4972
+Written 2000 / 4972
+Written 3000 / 4972
+Written 4000 / 4972
+Created dataset with 4972 samples
+Creating training task for writer 039
+Written 1000 / 4923
+Written 2000 / 4923
+Written 3000 / 4923
+Written 4000 / 4923
+Created dataset with 4923 samples
+Creating training task for writer 040
+Written 1000 / 4652
+Written 2000 / 4652
+Written 3000 / 4652
+Written 4000 / 4652
+Created dataset with 4652 samples
+Creating training task for writer 041
+Written 1000 / 5113
+Written 2000 / 5113
+Written 3000 / 5113
+Written 4000 / 5113
+Written 5000 / 5113
+Created dataset with 5113 samples
+Creating training task for writer 042
+Written 1000 / 4976
+Written 2000 / 4976
+Written 3000 / 4976
+Written 4000 / 4976
+Created dataset with 4976 samples
+Creating training task for writer 043
+Written 1000 / 5161
+Written 2000 / 5161
+Written 3000 / 5161
+Written 4000 / 5161
+Written 5000 / 5161
+Created dataset with 5161 samples
+Creating training task for writer 044
+Written 1000 / 5134
+Written 2000 / 5134
+Written 3000 / 5134
+Written 4000 / 5134
+Written 5000 / 5134
+Created dataset with 5134 samples
+Creating training task for writer 045
+Written 1000 / 5038
+Written 2000 / 5038
+Written 3000 / 5038
+Written 4000 / 5038
+Written 5000 / 5038
+Created dataset with 5038 samples
+Creating training task for writer 046
+Written 1000 / 5133
+Written 2000 / 5133
+Written 3000 / 5133
+Written 4000 / 5133
+Written 5000 / 5133
+Created dataset with 5133 samples
+Creating training task for writer 047
+Written 1000 / 4462
+Written 2000 / 4462
+Written 3000 / 4462
+Written 4000 / 4462
+Created dataset with 4462 samples
+Creating training task for writer 048
+Written 1000 / 5057
+Written 2000 / 5057
+Written 3000 / 5057
+Written 4000 / 5057
+Written 5000 / 5057
+Created dataset with 5057 samples
+Creating training task for writer 049
+Written 1000 / 4926
+Written 2000 / 4926
+Written 3000 / 4926
+Written 4000 / 4926
+Created dataset with 4926 samples
+Creating training task for writer 050
+Written 1000 / 4814
+Written 2000 / 4814
+Written 3000 / 4814
+Written 4000 / 4814
+Created dataset with 4814 samples
+Creating training task for writer 051
+Written 1000 / 5143
+Written 2000 / 5143
+Written 3000 / 5143
+Written 4000 / 5143
+Written 5000 / 5143
+Created dataset with 5143 samples
+Creating training task for writer 052
+Written 1000 / 5100
+Written 2000 / 5100
+Written 3000 / 5100
+Written 4000 / 5100
+Written 5000 / 5100
+Created dataset with 5100 samples
+Creating training task for writer 053
+Written 1000 / 5130
+Written 2000 / 5130
+Written 3000 / 5130
+Written 4000 / 5130
+Written 5000 / 5130
+Created dataset with 5130 samples
+Creating training task for writer 054
+Written 1000 / 4982
+Written 2000 / 4982
+Written 3000 / 4982
+Written 4000 / 4982
+Created dataset with 4982 samples
+Creating training task for writer 055
+Written 1000 / 5089
+Written 2000 / 5089
+Written 3000 / 5089
+Written 4000 / 5089
+Written 5000 / 5089
+Created dataset with 5089 samples
+Creating training task for writer 056
+Written 1000 / 5064
+Written 2000 / 5064
+Written 3000 / 5064
+Written 4000 / 5064
+Written 5000 / 5064
+Created dataset with 5064 samples
+Creating training task for writer 057
+Written 1000 / 5109
+Written 2000 / 5109
+Written 3000 / 5109
+Written 4000 / 5109
+Written 5000 / 5109
+Created dataset with 5109 samples
+Creating training task for writer 058
+Written 1000 / 5114
+Written 2000 / 5114
+Written 3000 / 5114
+Written 4000 / 5114
+Written 5000 / 5114
+Created dataset with 5114 samples
+Creating training task for writer 059
+Written 1000 / 5079
+Written 2000 / 5079
+Written 3000 / 5079
+Written 4000 / 5079
+Written 5000 / 5079
+Created dataset with 5079 samples
+Creating training task for writer 060
+Written 1000 / 5152
+Written 2000 / 5152
+Written 3000 / 5152
+Written 4000 / 5152
+Written 5000 / 5152
+Created dataset with 5152 samples
+Creating training task for writer 061
+Written 1000 / 5106
+Written 2000 / 5106
+Written 3000 / 5106
+Written 4000 / 5106
+Written 5000 / 5106
+Created dataset with 5106 samples
+Creating training task for writer 062
+Written 1000 / 5135
+Written 2000 / 5135
+Written 3000 / 5135
+Written 4000 / 5135
+Written 5000 / 5135
+Created dataset with 5135 samples
+Creating training task for writer 063
+Written 1000 / 5104
+Written 2000 / 5104
+Written 3000 / 5104
+Written 4000 / 5104
+Written 5000 / 5104
+Created dataset with 5104 samples
+Creating training task for writer 064
+Written 1000 / 5060
+Written 2000 / 5060
+Written 3000 / 5060
+Written 4000 / 5060
+Written 5000 / 5060
+Created dataset with 5060 samples
+Creating training task for writer 065
+Written 1000 / 4788
+Written 2000 / 4788
+Written 3000 / 4788
+Written 4000 / 4788
+Created dataset with 4788 samples
+Creating training task for writer 066
+Written 1000 / 4784
+Written 2000 / 4784
+Written 3000 / 4784
+Written 4000 / 4784
+Created dataset with 4784 samples
+Creating training task for writer 067
+Written 1000 / 4381
+Written 2000 / 4381
+Written 3000 / 4381
+Written 4000 / 4381
+Created dataset with 4381 samples
+Creating training task for writer 068
+Written 1000 / 5088
+Written 2000 / 5088
+Written 3000 / 5088
+Written 4000 / 5088
+Written 5000 / 5088
+Created dataset with 5088 samples
+Creating training task for writer 069
+Written 1000 / 4358
+Written 2000 / 4358
+Written 3000 / 4358
+Written 4000 / 4358
+Created dataset with 4358 samples
+Creating training task for writer 070
+Written 1000 / 5051
+Written 2000 / 5051
+Written 3000 / 5051
+Written 4000 / 5051
+Written 5000 / 5051
+Created dataset with 5051 samples
+Creating training task for writer 071
+Written 1000 / 5104
+Written 2000 / 5104
+Written 3000 / 5104
+Written 4000 / 5104
+Written 5000 / 5104
+Created dataset with 5104 samples
+Creating training task for writer 072
+Written 1000 / 5020
+Written 2000 / 5020
+Written 3000 / 5020
+Written 4000 / 5020
+Written 5000 / 5020
+Created dataset with 5020 samples
+Creating training task for writer 073
+Written 1000 / 5000
+Written 2000 / 5000
+Written 3000 / 5000
+Written 4000 / 5000
+Written 5000 / 5000
+Created dataset with 5000 samples
+Creating training task for writer 074
+Written 1000 / 5068
+Written 2000 / 5068
+Written 3000 / 5068
+Written 4000 / 5068
+Written 5000 / 5068
+Created dataset with 5068 samples
+Creating training task for writer 075
+Written 1000 / 4825
+Written 2000 / 4825
+Written 3000 / 4825
+Written 4000 / 4825
+Created dataset with 4825 samples
+Creating training task for writer 076
+Written 1000 / 5050
+Written 2000 / 5050
+Written 3000 / 5050
+Written 4000 / 5050
+Written 5000 / 5050
+Created dataset with 5050 samples
+Creating training task for writer 077
+Written 1000 / 4999
+Written 2000 / 4999
+Written 3000 / 4999
+Written 4000 / 4999
+Created dataset with 4999 samples
+Creating training task for writer 078
+Written 1000 / 4971
+Written 2000 / 4971
+Written 3000 / 4971
+Written 4000 / 4971
+Created dataset with 4971 samples
+Creating training task for writer 079
+Written 1000 / 4975
+Written 2000 / 4975
+Written 3000 / 4975
+Written 4000 / 4975
+Created dataset with 4975 samples
+Creating training task for writer 080
+Written 1000 / 5157
+Written 2000 / 5157
+Written 3000 / 5157
+Written 4000 / 5157
+Written 5000 / 5157
+Created dataset with 5157 samples
+Creating validation task for writer 081
+Written 1000 / 5068
+Written 2000 / 5068
+Written 3000 / 5068
+Written 4000 / 5068
+Written 5000 / 5068
+Created dataset with 5068 samples
+Creating validation task for writer 082
+Written 1000 / 5042
+Written 2000 / 5042
+Written 3000 / 5042
+Written 4000 / 5042
+Written 5000 / 5042
+Created dataset with 5042 samples
+Creating validation task for writer 083
+Written 1000 / 5089
+Written 2000 / 5089
+Written 3000 / 5089
+Written 4000 / 5089
+Written 5000 / 5089
+Created dataset with 5089 samples
+Creating validation task for writer 084
+Written 1000 / 4951
+Written 2000 / 4951
+Written 3000 / 4951
+Written 4000 / 4951
+Created dataset with 4951 samples
+Creating validation task for writer 085
+Written 1000 / 5014
+Written 2000 / 5014
+Written 3000 / 5014
+Written 4000 / 5014
+Written 5000 / 5014
+Created dataset with 5014 samples
+Creating validation task for writer 086
+Written 1000 / 4498
+Written 2000 / 4498
+Written 3000 / 4498
+Written 4000 / 4498
+Created dataset with 4498 samples
+Creating validation task for writer 087
+Written 1000 / 4861
+Written 2000 / 4861
+Written 3000 / 4861
+Written 4000 / 4861
+Created dataset with 4861 samples
+Creating validation task for writer 088
+Written 1000 / 4965
+Written 2000 / 4965
+Written 3000 / 4965
+Written 4000 / 4965
+Created dataset with 4965 samples
+Creating validation task for writer 089
+Written 1000 / 4692
+Written 2000 / 4692
+Written 3000 / 4692
+Written 4000 / 4692
+Created dataset with 4692 samples
+Creating validation task for writer 090
+Written 1000 / 4580
+Written 2000 / 4580
+Written 3000 / 4580
+Written 4000 / 4580
+Created dataset with 4580 samples
+Creating validation task for writer 091
+Written 1000 / 4932
+Written 2000 / 4932
+Written 3000 / 4932
+Written 4000 / 4932
+Created dataset with 4932 samples
+Creating validation task for writer 092
+Written 1000 / 4662
+Written 2000 / 4662
+Written 3000 / 4662
+Written 4000 / 4662
+Created dataset with 4662 samples
+Creating validation task for writer 093
+Written 1000 / 3553
+Written 2000 / 3553
+Written 3000 / 3553
+Created dataset with 3553 samples
+Creating validation task for writer 094
+Written 1000 / 5096
+Written 2000 / 5096
+Written 3000 / 5096
+Written 4000 / 5096
+Written 5000 / 5096
+Created dataset with 5096 samples
+Creating validation task for writer 095
+Written 1000 / 4338
+Written 2000 / 4338
+Written 3000 / 4338
+Written 4000 / 4338
+Created dataset with 4338 samples
+Creating validation task for writer 096
+Written 1000 / 4782
+Written 2000 / 4782
+Written 3000 / 4782
+Written 4000 / 4782
+Created dataset with 4782 samples
+Creating validation task for writer 097
+Written 1000 / 3907
+Written 2000 / 3907
+Written 3000 / 3907
+Created dataset with 3907 samples
+Creating validation task for writer 098
+Written 1000 / 4188
+Written 2000 / 4188
+Written 3000 / 4188
+Written 4000 / 4188
+Created dataset with 4188 samples
+Creating validation task for writer 099
+Written 1000 / 4018
+Written 2000 / 4018
+Written 3000 / 4018
+Written 4000 / 4018
+Created dataset with 4018 samples
+Creating validation task for writer 100
+Written 1000 / 5039
+Written 2000 / 5039
+Written 3000 / 5039
+Written 4000 / 5039
+Written 5000 / 5039
+Created dataset with 5039 samples
+Created 80 training tasks and 20 validation tasks under: /data/OCR/deep-text-recognition-benchmark/step_maml
